@@ -21,6 +21,15 @@ export default defineConfig(
 				projectService: { allowDefaultProject: ["*.config.*s"] },
 			},
 		},
+		rules: {
+			"@typescript-eslint/restrict-template-expressions": [
+				"error",
+				{
+					allowBoolean: true,
+					allowNumber: true,
+				},
+			],
+		},
 	},
 	{
 		extends: [vitest.configs.recommended],

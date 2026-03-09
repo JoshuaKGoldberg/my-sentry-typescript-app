@@ -17,26 +17,27 @@ Sentry.init({
 });
 
 for (let i = 0; i < 10; i += 1) {
-	Sentry.captureEvent({
-		message: `Hello, Sentry! ${i}`,
-	});
+	// Sentry.captureEvent({
+	// 	message: `Hello, Sentry! ${i}`,
+	// });
+	Sentry.logger.info("User triggered test log", { action: "test_log" });
 }
 
 // // Synchronous example: measures the duration of the 'measureThis()' function
-// Sentry.startSpan(
-// 	{
-// 		name: "my-span", // A description for the span
-// 		op: "function_execution", // The operation name (e.g., db, http, function)
-// 	},
-// 	(span) => {
-// 		try {
-// 			//   measureThis(); // Your code goes here
-// 			// You can add custom data to the span within the callback
-// 			span.setAttribute("custom_key", "custom_value");
-// 			// throw new Error("gotcha")
-// 		} catch (error) {
-// 			// You can also capture errors within the span's context
-// 			Sentry.captureException(error);
-// 		}
-// 	},
-// );
+Sentry.startSpan(
+	{
+		name: "my-span", // A description for the span
+		op: "function_execution", // The operation name (e.g., db, http, function)
+	},
+	(span) => {
+		try {
+			//   measureThis(); // Your code goes here
+			// You can add custom data to the span within the callback
+			span.setAttribute("custom_key", "custom_value");
+			throw new Error("gotcha");
+		} catch (error) {
+			// You can also capture errors within the span's context
+			Sentry.captureException(error);
+		}
+	},
+);
